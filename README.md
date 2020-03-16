@@ -3,7 +3,7 @@
 This repository contains codes and responses to JP Morgans's internship assignment 2.
 
 ## Contents
-I.   **Hands on with AWS**- This section caters to provide a brief explanation on the steps performed to solve the 1st question.
+I.   [**Hands on with AWS**](https://github.com/surya-de/JPM#i-hands-on-with-aws)- This section caters to provide a brief explanation on the steps performed to solve the 1st question.
 
 II.  **Solution Design**- This section answers the Design question on Graph database.
 
