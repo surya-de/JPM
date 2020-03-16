@@ -26,7 +26,7 @@ To decide a set of AWS services, I used the following 3 step process-
 3. AWS Sagemaker
 4. AWS Lambda
 5. AWS SQS
-#### Design
+#### Cloudformation Structure
 ![Architecture Diagram](/images/cloudformation.png)
 #### Code Snippet
 
