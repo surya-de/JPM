@@ -27,7 +27,7 @@ To decide a set of AWS services, I used the following 3 step process-
 4. AWS Lambda
 5. AWS SQS
 #### Design
-![Architecture Diagram](/images/architecture.png)
+![Architecture Diagram](/images/cloudformation.png)
 #### Code
 ```json
 {
@@ -338,7 +338,7 @@ To decide a set of AWS services, I used the following 3 step process-
 
 #### B. Reason behind the chosen services-
 ##### Design
-![Architecture Diagram](/Screen%20Shot%202020-03-12%20at%203.02.53%20AM.png)
+![Architecture Diagram](/images/architecture.png)
 ##### AWS S3
 i. I have used S3 buckets to store the raw data(Landing bucket) and transformed data (Curated bucket).
 
@@ -440,7 +440,7 @@ def file_upload():
 ### 3. Load Pre processed data
 I have loaded the pre processed data into **Athena** using a serverless lambda function to automate the flow.
 
-![table](/Screen%20Shot%202020-03-14%20at%2012.56.51%20PM.png)
+![table](/images/athenatable.png)
 ### 4. Aggregation query
 ### 5. Cost of services
 
@@ -490,6 +490,9 @@ CREATE (label_name:node_name { property_name: property_value imported as line in
 ```
 
 ### 3. Design of graph relation
+
+**Diagram**
+![graph](/images/graphdatabase.png)
 
 To decide the graph relation I have taken the following steps-
 
@@ -555,7 +558,7 @@ B <---------------- A
 
 ## III. Folder Structure
 ### How the folders look
-![folders](Screen%20Shot%202020-03-14%20at%201.24.23%20PM.png)
+![folders](/images/folderstructure.png)
 ### Explanation
 1. **Architecture**- Contains the LLD and HLD diagrams of the implementation.
 
