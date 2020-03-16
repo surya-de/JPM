@@ -435,7 +435,7 @@ To successfully run the code the user must have-
 Once the environment is set up, perform the following steps-
 1. clone the git repository
 ```bash
-git clone 
+git clone https://github.com/surya-de/JPM.git
 ```
 2. Navigate to the **codes** folder
 ```bash
