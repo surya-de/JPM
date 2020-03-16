@@ -164,6 +164,22 @@ I am adding a small preview on role and policy creation, the entire cloudformati
 #### B. Reason behind the chosen services-
 ##### Design
 ![Architecture Diagram](/images/architecture.png)
+***The numbers in the diagram denotes the order of execution***
+
+step 1- On executing the python sdk, it creates an s3 bucket 'surya-lambda-code-store' and pushes the lambda codes into this bucket.
+
+step 2- The python sdk then excutes the cloudformation script (jpmstack).
+
+step 3- The cloudformation script launces and configures the AWS services.
+
+step 4- Once, the AWS services are configured, the the python sdk pushes the raw data into s3 bucket(surya-landing) and executes the lambda code(surya-transform-files) for data transformation.
+
+step 5- The lambda performs data transformation and pushes the curated data into s3 bucket(surya-curated).
+
+step 6- Once the curated bucket is filled, an SQS event is triggered(surya-send-message).
+
+step 7- The SQS event triggers another lambda which is responsible to call Athena database. This lambda creates a database and table in Athena when called for the first time.
+
 ##### AWS S3
 i. I have used S3 buckets to store the raw data(Landing bucket) and transformed data (Curated bucket).
 
