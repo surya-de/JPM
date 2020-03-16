@@ -30,7 +30,7 @@ To decide a set of AWS services, I used the following 3 step process-
 ![Architecture Diagram](/images/cloudformation.png)
 #### Code Snippet
 
-I am adding a small preview on how role and policy creation, the entire cloudformation script can be found [here](https://github.com/surya-de/JPM/blob/master/codes/cloud_formation/scripts/final_clf.json).
+I am adding a small preview on role and policy creation, the entire cloudformation script can be found [here](https://github.com/surya-de/JPM/blob/master/codes/cloud_formation/scripts/final_clf.json).
 
 ```json
 {
