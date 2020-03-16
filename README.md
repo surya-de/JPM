@@ -28,80 +28,12 @@ To decide a set of AWS services, I used the following 3 step process-
 5. AWS SQS
 #### Design
 ![Architecture Diagram](/images/cloudformation.png)
-#### Code
+#### Code Snippet
+
+I am adding a small preview on how role and policy creation, the entire cloudformation script can be found [here](https://github.com/surya-de/JPM/blob/master/codes/cloud_formation/scripts/final_clf.json).
+
 ```json
 {
-    "AWSTemplateFormatVersion": "2010-09-09",
-    "Metadata": {
-        "AWS::CloudFormation::Designer": {
-            "ab65a1ca-1e1e-4c65-81fb-33399b54a730": {
-                "size": {
-                    "width": 60,
-                    "height": 60
-                },
-                "position": {
-                    "x": 137,
-                    "y": 60
-                },
-                "z": 0
-            },
-            "74fd412b-f517-4892-95bb-8a2a181501f7": {
-                "size": {
-                    "width": 60,
-                    "height": 60
-                },
-                "position": {
-                    "x": 127,
-                    "y": 150
-                },
-                "z": 0
-            },
-            "548918d9-c65f-4912-a3ad-8d557acde166": {
-                "size": {
-                    "width": 60,
-                    "height": 60
-                },
-                "position": {
-                    "x": 279,
-                    "y": 57
-                },
-                "z": 0
-            },
-            "b62d989a-4a96-45be-8d8c-ccdae66baa76": {
-                "size": {
-                    "width": 60,
-                    "height": 60
-                },
-                "position": {
-                    "x": 457,
-                    "y": 100
-                },
-                "z": 0
-            },
-            "d45c1cba-2197-450c-ba0d-ee9a01f0faa4": {
-                "size": {
-                    "width": 60,
-                    "height": 60
-                },
-                "position": {
-                    "x": 580,
-                    "y": 170
-                },
-                "z": 0
-            },
-            "35d45a4f-4b4b-4b21-aa0b-38a6d410083d": {
-                "size": {
-                    "width": 60,
-                    "height": 60
-                },
-                "position": {
-                    "x": 713,
-                    "y": 55
-                },
-                "z": 0
-            }
-        }
-    },
     "Resources": {
         "LambdaS3ExecutionRole": {
             "Type": "AWS::IAM::Role",
@@ -225,113 +157,6 @@ To decide a set of AWS services, I used the following 3 step process-
                 ]}
             }
         },
-        "landingbucket": {
-            "Type": "AWS::S3::Bucket",
-            "Properties": {
-                "BucketName" : "surya-landing"
-            },
-            "Metadata": {
-                "AWS::CloudFormation::Designer": {
-                    "id": "ab65a1ca-1e1e-4c65-81fb-33399b54a730"
-                }
-            }
-        },
-        "curatedbucket": {
-            "Type": "AWS::S3::Bucket",
-            "Properties": {
-                "BucketName" : "surya-curated"
-            },
-            "Metadata": {
-                "AWS::CloudFormation::Designer": {
-                    "id": "74fd412b-f517-4892-95bb-8a2a181501f7"
-                }
-            }
-        },
-        "transformLambda": {
-            "Type": "AWS::Lambda::Function",
-            "DependsOn": [
-                "LambdaS3ExecutionRole",
-                "LambdaS3ExecutionPolicy"
-            ],
-            "Properties": {
-                "Code": {
-                    "S3Bucket": "surya-lambda-code-store",
-                    "S3Key": "lambda.zip"
-                },
-                "FunctionName" : "surya-transform-files",
-                "Role": {
-                    "Fn::GetAtt": ["LambdaS3ExecutionRole", "Arn"]
-                },
-                "Timeout": 600,
-                "Handler": "lambda_function.lambda_handler",
-                "Runtime": "python3.6",
-                "MemorySize": 1024
-            },
-            "Metadata": {
-                "AWS::CloudFormation::Designer": {
-                    "id": "b62d989a-4a96-45be-8d8c-ccdae66baa76"
-                }
-            }
-        },
-        "eventsqs": {
-            "Type": "AWS::SQS::Queue",
-            "Properties": {
-                "QueueName":"surya-send-message",
-                "VisibilityTimeout" : 200
-            },
-            "Metadata": {
-                "AWS::CloudFormation::Designer": {
-                    "id": "d45c1cba-2197-450c-ba0d-ee9a01f0faa4"
-                }
-            }
-        },
-        "callAthena": {
-            "Type": "AWS::Lambda::Function",
-            "DependsOn": [
-                "LambdaS3ExecutionRole",
-                "LambdaS3ExecutionPolicy"
-            ],
-            "Properties": {
-                "Code": {
-                    "S3Bucket": "surya-lambda-code-store",
-                    "S3Key": "athena_lambda_function.zip"
-                },
-                 "FunctionName" : "surya-call-athena",
-                "Role": {
-                    "Fn::GetAtt": ["LambdaS3ExecutionRole", "Arn"]
-                },
-                "Timeout": 200,
-                "Handler": "athena_lambda_function.lambda_handler",
-                "Runtime": "python3.6",
-                "MemorySize": 600                
-            },
-            "Metadata": {
-                "AWS::CloudFormation::Designer": {
-                    "id": "35d45a4f-4b4b-4b21-aa0b-38a6d410083d"
-                }
-            }
-        },
-        "EventSourceMapping": {
-            "Type": "AWS::Lambda::EventSourceMapping",
-            "DependsOn": [
-                "callAthena",
-                "eventsqs"
-            ],
-            "Properties": {
-                "EventSourceArn": {
-                    "Fn::GetAtt": [
-                        "eventsqs",
-                        "Arn"
-                    ]                    
-                },
-                "FunctionName": {
-                    "Fn::GetAtt": [
-                        "callAthena",
-                        "Arn"
-                    ]
-                }
-            }
-        }
     }
 }
 ```
