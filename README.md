@@ -312,137 +312,147 @@ LIMIT 5
 The cost calculation below makes an assumption that the entire pipeline will be executed 1 time per month. So, the metrics associated with the calculations are assumed based on 1 execution.
 
 S3 buckets
- 	1.1. surya-athena-output
-	   Assumptions-
-S3 storage
-2 GB/month
-Upload requests
-6 requests
 
+ 	1.1. surya-athena-output
+	   
+	   Assumptions-
+	        |----------------|-----------|
+		|S3 storage      | 2 GB/month|
+		|----------------|-----------|
+		|Upload requests | 6 requests|
+		|----------------|-----------|
+	
+	
 	   Calculations-
 		2 GB per month x 0.004 USD = 0.01 USD (Glacier storage cost)
-6 requests x 0.00005 USD = 0.00 USD (UPLOAD Requests cost)
-0.01 USD + 0.00 USD = 0.01 USD (Total Data Retrieval cost )
-S3 Glacier cost_1.1 (monthly): 0.01 USD
-
+		6 requests x 0.00005 USD = 0.00 USD (UPLOAD Requests cost)
+		0.01 USD + 0.00 USD = 0.01 USD (Total Data Retrieval cost )
+		S3 Glacier cost_1.1 (monthly): 0.01 USD
+	
 	1.2. surya-landing
 	   Assumptions-
-S3 storage
-2 GB/month
-Upload requests
-2 requests
-
+		|----------------|-----------|
+		|S3 storage      | 2 GB/month|
+		|----------------|-----------|
+		|Upload requests | 2 requests|
+		|----------------|-----------|
+	
 	   Calculations-
 		2 GB per month x 0.004 USD = 0.01 USD (Glacier storage cost)
-2 requests x 0.00005 USD = 0.00 USD (UPLOAD Requests cost)
-0.01 USD + 0.00 USD = 0.01 USD (Total Data Retrieval cost )
-S3 Glacier cost_1.2 (monthly): 0.01 USD
-
+		2 requests x 0.00005 USD = 0.00 USD (UPLOAD Requests cost)
+		0.01 USD + 0.00 USD = 0.01 USD (Total Data Retrieval cost )
+		S3 Glacier cost_1.2 (monthly): 0.01 USD
+	
 	1.3. surya-curated
 	   Assumptions-
-S3 storage
-2 GB/month
-Upload requests
-104 requests
+		|-----------------|-------------|
+		|S3 storage       | 2 GB/month  |
+		|-----------------|-------------|
+		|Upload requests  |104 requests |
+		|-----------------|-------------|
 
 	   Calculations-
 		2 GB per month x 0.004 USD = 0.01 USD (Glacier storage cost)
-104 requests x 0.00005 USD = 0.01 USD (UPLOAD Requests cost)
-0.01 USD + 0.01 USD = 0.01 USD (Total Data Retrieval cost )
-S3 Glacier cost_1.3 (monthly): 0.02 USD
-
-
-
-
+		104 requests x 0.00005 USD = 0.01 USD (UPLOAD Requests cost)
+		0.01 USD + 0.01 USD = 0.01 USD (Total Data Retrieval cost )
+		S3 Glacier cost_1.3 (monthly): 0.02 USD
 
 	1.4. Surya-store-lambda-code
-
 	   Assumptions-
-S3 storage
-1 GB/month
-Upload requests
-2 requests
+		|-----------------|------------|
+		|S3 storage       |  1 GB/month|
+		|-----------------|------------|
+		|Upload requests  | 2 requests |
+		|-----------------|------------|
 
 	   Calculations-
 		1 GB per month x 0.004 USD = 0.00 USD (Glacier storage cost)
-2 requests x 0.00005 USD = 0.00 USD (UPLOAD Requests cost)
-0.00 USD + 0.00 USD = 0.00 USD (Total Data Retrieval cost )
-S3 Glacier cost_1.4 (monthly): 0.00 USD
+		2 requests x 0.00005 USD = 0.00 USD (UPLOAD Requests cost)
+		0.00 USD + 0.00 USD = 0.00 USD (Total Data Retrieval cost )
+		S3 Glacier cost_1.4 (monthly): 0.00 USD
 
-TOTAL S3 COST-
+	TOTAL S3 COST-
 	S3 Glacier cost_1.1 + S3 Glacier cost_1.2 + S3 Glacier cost_1.3 + S3 Glacier cost_1.4
 	= 0.01 + 0.01 + 0.02 + 0.00
 	= 0.04 USD
 
 Lambda function
+
 	2.1. transformation-lambda
-   Assumptions-
-Number of requests
-1
-Duration of each request(ms)
-600000
-Amount of memory allocated
-1024(MB)
+           Assumptions-
+		|------------------------------|---------|
+		|Number of requests            |1        |
+		|------------------------------|---------|
+		|Duration of each request(ms)  |600000   |
+		|------------------------------|---------|
+		|Amount of memory allocated    |1024(MB) |
+		|------------------------------|---------|
 
 	   Calculations-
-		Unit conversions
-Amount of memory allocated: 1024 MB x 0.0009765625 GB in a MB = 1 GB
-Pricing calculations
-RoundUp (600000) = 600000 Duration rounded to nearest 100ms
-1 requests x 600,000 ms x 0.001 ms to sec conversion factor = 600.00 total compute (seconds)
-1 GB x 600.00 seconds = 600.00 total compute (GB-s)
-600.00 GB-s x 0.0000166667 USD = 0.01 USD (monthly compute charges)
-1 requests x 0.0000002 USD = 0.00 USD (monthly request charges)
-0.01 USD + 0.00 USD = 0.01 USD
-Lambda cost_2.1(monthly): 0.01 USD
+		Unit conversions-
+		Amount of memory allocated: 1024 MB x 0.0009765625 GB in a MB = 1 GB
+		Pricing calculations
+		RoundUp (600000) = 600000 Duration rounded to nearest 100ms
+		1 requests x 600,000 ms x 0.001 ms to sec conversion factor = 600.00 total compute (seconds)
+		1 GB x 600.00 seconds = 600.00 total compute (GB-s)
+		600.00 GB-s x 0.0000166667 USD = 0.01 USD (monthly compute charges)
+		1 requests x 0.0000002 USD = 0.00 USD (monthly request charges)
+		0.01 USD + 0.00 USD = 0.01 USD
+		Lambda cost_2.1(monthly): 0.01 USD
 
 	2.2. call-athena
 	   Assumptions-
-Number of requests
-1
-Duration of each request(ms)
-180000
-Amount of memory allocated
-600(MB)
+	   	|------------------------------|---------|
+		|Number of requests            |1        |
+		|------------------------------|---------|
+		|Duration of each request(ms)  |180000   |
+		|------------------------------|---------|
+		|Amount of memory allocated     600(MB)  |
+		|------------------------------|---------|
 
 	   Calculations-
-		Unit conversions
-Amount of memory allocated: 600 MB x 0.0009765625 GB in a MB = 0.5859375 GB
-
-Pricing calculations
-RoundUp (180000) = 180000 Duration rounded to nearest 100ms
-1 requests x 180,000 ms x 0.001 ms to sec conversion factor = 180.00 total compute (seconds)
-0.5859375 GB x 180.00 seconds = 105.47 total compute (GB-s)
-105.47 GB-s x 0.0000166667 USD = 0.00 USD (monthly compute charges)
-1 requests x 0.0000002 USD = 0.00 USD (monthly request charges)
-0.00 USD + 0.00 USD = 0.00 USD
-Lambda cost_2.2(monthly): 0.00 USD
+		Unit conversions-
+		Amount of memory allocated: 600 MB x 0.0009765625 GB in a MB = 0.5859375 GB
+		Pricing calculations-
+		RoundUp (180000) = 180000 Duration rounded to nearest 100ms
+		1 requests x 180,000 ms x 0.001 ms to sec conversion factor = 180.00 total compute (seconds)
+		0.5859375 GB x 180.00 seconds = 105.47 total compute (GB-s)
+		105.47 GB-s x 0.0000166667 USD = 0.00 USD (monthly compute charges)
+		1 requests x 0.0000002 USD = 0.00 USD (monthly request charges)
+		0.00 USD + 0.00 USD = 0.00 USD
+		Lambda cost_2.2(monthly): 0.00 USD
      
        total_lambda_cost = Lambda cost_2.1 + Lambda cost_2.2
 			= 0.01 + 0.00
 			= 0.01
-
+			
 Athena
-	   Assumptions-
-Number of Query 
-10 per day
-Data scanned per query
-700 MB
+```
+  Assumptions-
+	|-----------------------|-----------|
+ 	|Number of Query        |10 per day |
+	|-----------------------|-----------|
+	|Data scanned per query	|700 MB     |
+	|-----------------------|-----------|
+	
+  Calculations-
+	Total number of queries: 10 per day * (730 hours in a month / 24 hours in a day)
+	= 304.1666666666667 queries per month
+	
+  Data amount scanned per query: 700 MB x 9.5367432e-7 TB in a MB              	
+	= 0.000667572024 TB
+	
+  Pricing calculations
+	Rounding (304.1666666666667) = 304 Rounded total number of queries
+	304 queries per month x 0.000667572024 TB x 5.00 USD = 1.01 USD
+	
+  Athena cost (monthly): 1.01 USD
+```
+### Total cost (monthly) = Total_S3_cost + total_lambda_cost + Athena cost###
 
-   Calculations-
-Total number of queries: 10 per day * (730 hours in a month / 24 hours in a day)
-= 304.1666666666667 queries per month
-
-Data amount scanned per query: 700 MB x 9.5367432e-7 TB in a MB              	= 0.000667572024 TB
-
-Pricing calculations
-Rounding (304.1666666666667) = 304 Rounded total number of queries
-304 queries per month x 0.000667572024 TB x 5.00 USD = 1.01 USD
-Athena cost (monthly): 1.01 USD
-
-Total cost (monthly) - Total_S3_cost + total_lambda_cost + Athena cost
-			= 0.04 + 0.01 + 1.01
-			= 1.06 USD per month
+  = 0.04 + 0.01 + 1.01
+  
+  = 1.06 USD per month
 
 ## II. Solution Design
 ### 1. AWS Neptune vs Neo4j
