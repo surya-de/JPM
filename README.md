@@ -282,7 +282,31 @@ def file_upload():
 I have loaded the pre processed data into **Athena** using a serverless lambda function to automate the flow.
 
 ![table](/images/athenatable.png)
-### 4. Aggregation query
+### 4. Aggregation query 
+
+**Query**-
+This query returns the top 5 counties with maximum inflow in population.
+
+```sql
+SELECT cunty_curr_res AS county_name, SUM(mvrs_in_cunty_to_cunty_flw_est) AS inflow_value
+FROM "curated_db"."surya_final_table"
+GROUP BY identifier, cunty_curr_res
+HAVING identifier LIKE 'inflow'
+ORDER BY SUM(mvrs_in_cunty_to_cunty_flw_est) desc
+LIMIT 5
+```
+
+**Output**
+
+| county_name        | inflow_value |
+|--------------------|--------------|
+| Orange County      | 289306       |
+| Los Angeles County | 287588       |
+| Montgomery County  | 256565       |
+| Harris County      | 228421       |
+| Maricopa County    | 208279       |
+
+![Query](/images/query.png)
 ### 5. Cost of services
 
 ## II. Solution Design
