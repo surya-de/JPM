@@ -3,9 +3,25 @@
 This repository contains codes and responses to JP Morgans's internship assignment 2.
 
 ## Contents
-I.   [**Hands on with AWS**](https://github.com/surya-de/JPM#i-hands-on-with-aws)- This section caters to provide a brief explanation on the steps performed to solve the 1st question.
+I. [**Hands on with AWS**](https://github.com/surya-de/JPM#i-hands-on-with-aws)- This section caters to provide a brief explanation on the steps performed to solve the 1st question. 
+ 
+   1. [Cloudformation to configure AWS services](https://github.com/surya-de/JPM/blob/master/README.md#1-cloudformation-to-configure-aws-services)
 
-II.  [**Solution Design**](https://github.com/surya-de/JPM#ii-solution-design)- This section answers the Design question on Graph database.
+   2. [Upload raw data into AWS service](https://github.com/surya-de/JPM/blob/master/README.md#2-upload-raw-data-into-aws-service)
+   
+   3. [Load preprocessed data](https://github.com/surya-de/JPM/blob/master/README.md#3-load-pre-processed-data)
+   
+   4. [Aggregation query](https://github.com/surya-de/JPM/blob/master/README.md#4-aggregation-query)
+   
+   5. [Cost of services](https://github.com/surya-de/JPM/blob/master/README.md#5-cost-of-services)
+
+II. [**Solution Design**](https://github.com/surya-de/JPM#ii-solution-design)- This section answers the Design question on Graph database.
+   
+   1. [AWS Neptune vs Neo4j](https://github.com/surya-de/JPM/blob/master/README.md#1-aws-neptune-vs-neo4j)
+   
+   2. [How to load data](https://github.com/surya-de/JPM/blob/master/README.md#2-how-to-load-data)
+   
+   3. [Design of graph relation](https://github.com/surya-de/JPM/blob/master/README.md#3-design-of-graph-relation)
 
 III. [**Folder Structure**](https://github.com/surya-de/JPM#iii-folder-structure)- This section is a brief explanation of the project's folder structure.
 
